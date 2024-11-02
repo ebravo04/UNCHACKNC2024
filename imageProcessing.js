@@ -1,5 +1,6 @@
-export function checkForReccomendations(array) {
-  const reccomendations = [];
+// imageProcessing.js
+function checkForReccomendations(array) {
+  let reccomendations = [];
   for (let item of array) {
     if (!item.includes("lamp")) {
       reccomendations.push("lamp");
@@ -7,3 +8,5 @@ export function checkForReccomendations(array) {
   }
   return reccomendations;
 }
+
+module.exports = { checkForReccomendations };
