@@ -4,6 +4,7 @@ const Clarifai = require("clarifai");
 const imageProcessing = require("./imageProcessing");
 const { apiKey } = require("./config");
 const multer = require("multer");
+const fs = require("fs");
 
 const app = express();
 const upload = multer({ dest: "uploads/" });

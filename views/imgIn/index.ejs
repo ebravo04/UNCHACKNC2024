@@ -1,59 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif; /* Add this line to match the fonts */
-        }
-        form {
-            text-align: center;
-        }
-        label {
-            font-family: Arial, Helvetica, sans-serif; /* Add this line to set the font for the label */
-            font-size: 20px; /* Add this line to set the font size for the label */
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      form {
+        text-align: center;
+      }
+      label {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+      }
     </style>
-</head>
-<body>
-    <h1>=></h1>
-    <form id="uploadForm" enctype="multipart/form-data">
+  </head>
+  <body>
+    <div>
+      <h1>Image Analysis</h1>
+      <form id="uploadForm" enctype="multipart/form-data">
         <label for="imageFile">Choose an image:</label>
-        <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+        <input
+          type="file"
+          id="imageFile"
+          name="imageFile"
+          accept="image/*"
+          required
+        />
         <button type="button" onclick="submitImage()">Analyze Image</button>
-    </form>
-</body>
-<script>
+      </form>
+      <!-- Add a div to display the result -->
+      <div id="result"></div>
+    </div>
+  </body>
+  <script>
     async function submitImage() {
-      const fileInput = document.getElementById('imageFile');
+      const fileInput = document.getElementById("imageFile");
       const formData = new FormData();
-      formData.append('imageFile', fileInput.files[0]);
-  
+      formData.append("imageFile", fileInput.files[0]);
+
       try {
-        const response = await fetch('/analyze-image', {
-          method: 'POST',
-          body: formData
+        const response = await fetch("/analyze-image", {
+          method: "POST",
+          body: formData,
         });
-  
+
         const result = await response.json();
-  
+
         if (response.ok) {
           const detectedItems = result.detectedItems;
-  
+
           // Display the list of detected items
-          document.getElementById('result').innerHTML = "<h2>Detected Objects:</h2><ul>" +
-            detectedItems.map(item => <li>${item}</li>).join('') +
+          document.getElementById("result").innerHTML =
+            "<h2>Detected Objects:</h2><ul>" +
+            detectedItems.map((item) => `<li>${item}</li>`).join("") +
             "</ul>";
         } else {
-          document.getElementById('result').innerHTML = <p>Error: ${result.error}</p>;
+          document.getElementById(
+            "result"
+          ).innerHTML = `<p>Error: ${result.error}</p>`;
         }
       } catch (error) {
         console.error("Error:", error);
-        document.getElementById('result').innerHTML = <p>An error occurred while processing the image.</p>;
+        document.getElementById(
+          "result"
+        ).innerHTML = `<p>An error occurred while processing the image.</p>`;
       }
     }
   </script>

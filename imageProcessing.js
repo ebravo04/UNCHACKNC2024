@@ -1,12 +1,9 @@
 // imageProcessing.js
 function checkForReccomendations(array) {
-  let reccomendations = [];
-  for (let item of array) {
-    if (!item.includes("lamp")) {
-      reccomendations.push("lamp");
-    }
+  if (!array.some((item) => item.includes("lamp"))) {
+    return ["lamp"];
   }
-  return reccomendations;
+  return [];
 }
 
 module.exports = { checkForReccomendations };
