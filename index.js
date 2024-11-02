@@ -1,9 +1,16 @@
 const express = require("express");
-
+const path = require("path");
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+// Set the views directory
+app.set("views", path.join(__dirname, "views"));
+
+// Set the view engine to ejs
+app.set("view engine", "ejs");
+
+// Route to render the index.ejs file
+app.get("/imgIn", (req, res) => {
+  res.render("imgIn/index");
 });
 
 const PORT = 3000;
