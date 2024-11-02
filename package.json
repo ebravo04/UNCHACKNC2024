@@ -1,0 +1,24 @@
+{
+  "name": "unchacknc2024",
+  "version": "1.0.0",
+  "description": "first commit for hack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebravo04/UNCHACKNC2024.git"
+  },
+  "author": "Eric Bravo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ebravo04/UNCHACKNC2024/issues"
+  },
+  "homepage": "https://github.com/ebravo04/UNCHACKNC2024#readme",
+  "dependencies": {
+    "express": "^4.21.1",
+    "mongoose": "^8.8.0",
+    "nodemon": "^3.1.7"
+  }
+}
