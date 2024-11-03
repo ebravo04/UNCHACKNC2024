@@ -22,7 +22,7 @@
   <body>
     <div>
       <h1>Image Analysis</h1>
-      <form id="uploadForm" enctype="multipart/form-data">
+      <form id="uploadForm" enctype="multipart/form-data" method="POST" action="/analyze-image">
         <label for="imageFile">Choose an image:</label>
         <input
           type="file"
@@ -31,12 +31,12 @@
           accept="image/*"
           required
         />
-        <button type="button" onclick="submitImage()">Analyze Image</button>
+        <button type="submit">Analyze Image</button>
       </form>
-      <!-- Add a div to display the result -->
-      <div id="result"></div>
     </div>
   </body>
+</html>
+
   <script>
     async function submitImage() {
       const fileInput = document.getElementById("imageFile");
@@ -48,6 +48,8 @@
           method: "POST",
           body: formData,
         });
+
+        console.log("Raw Response:", response); // Log the raw response
 
         const result = await response.json();
 

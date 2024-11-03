@@ -66,40 +66,50 @@ app.get("/test-clarifai", async (req, res) => {
 
 app.post("/analyze-image", upload.single("imageFile"), async (req, res) => {
   try {
+    console.log("File received:", req.file);
     const imageFilePath = req.file.path;
 
     // Convert the image to base64
+    console.log("Converting image to base64...");
     const imageBytes = fs.readFileSync(imageFilePath, { encoding: "base64" });
+    const base64Image = `data:image/jpeg;base64,${imageBytes}`;
 
     // Analyze the image using Clarifai's general model
+    console.log("Analyzing image with Clarifai...");
     const response = await clarifaiApp.models.predict(Clarifai.GENERAL_MODEL, {
       base64: imageBytes,
     });
+
+    console.log("Clarifai response:", response);
 
     // Extract detected concept names
     const detectedItems = response.outputs[0].data.concepts.map(
       (concept) => concept.name
     );
 
+    console.log("Detected items:", detectedItems);
+
     // Remove the uploaded file after processing
     fs.unlinkSync(imageFilePath);
 
-    const reccomendation =
+    const recommendation =
       imageProcessing.checkForReccomendations(detectedItems);
+    const searchResults = await searchLowesForProducts(recommendation);
 
-    const searchResults = await searchLowesForProducts(reccomendation);
+    console.log("Recommendation:", recommendation);
+    console.log("Search results:", JSON.stringify(searchResults, null, 2));
 
-    console.log("Detected items:", detectedItems);
-    console.log("Reccomendation:", reccomendation);
-
+    // Render the results page with all data
     res.render("result", {
       userImage: base64Image,
       detectedItems,
-      reccomendation,
+      recommendation,
       searchResults,
     });
   } catch (error) {
     console.error("Error analyzing image:", error);
-    res.status(500).json({ error: "Failed to analyze image" });
+    res
+      .status(500)
+      .json({ error: "Failed to analyze image", details: error.message });
   }
 });
