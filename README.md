@@ -41,7 +41,7 @@ Copy code
 
 # Clone the repo
 
-git clone https://github.com/username/project-name.git
+git clone [https://github.com/username/project-name.git](https://github.com/ebravo04/UNCHACKNC2024)
 
 # Navigate to the project directory
 
