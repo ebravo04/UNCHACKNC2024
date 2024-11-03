@@ -98,7 +98,6 @@ app.post("/analyze-image", upload.single("imageFile"), async (req, res) => {
 
     console.log("Recommendation:", recommendation);
     console.log("Search results:", JSON.stringify(searchResults, null, 2));
-    console.log("image", base64Image);
 
     // Render the results page with all data
     res.render("result", {
