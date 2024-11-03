@@ -1,6 +1,6 @@
 # SnapSuggest
 
-Snap a pciture, find decor!
+Snap a picture, find decor!
 
 # 🚀 Inspiration
 
