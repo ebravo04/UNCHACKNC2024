@@ -13,9 +13,6 @@ async function searchLowesForProducts(array) {
   });
 
   const page = await browser.newPage();
-  //   await page.setUserAgent(
-  //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
-  //   );
 
   const searchResults = [];
 
@@ -57,7 +54,12 @@ async function searchLowesForProducts(array) {
           "a[data-clicktype='product_tile_click']"
         )?.href;
 
-        return { title, price, link };
+        // Extract the image URL
+        const imageUrl = item
+          .querySelector("[data-selector='splp-prd-img'] img")
+          ?.getAttribute("src");
+
+        return { title, price, link, imageUrl };
       });
     });
 
