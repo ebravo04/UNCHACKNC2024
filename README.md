@@ -1,4 +1,5 @@
 SnapSuggest
+
 Snap a pciture, find decor!
 🚀 Inspiration
 As Computer Science students, we value our desk setups and how our rooms look, what better way to decorate our setups or rooms than to use technology!
