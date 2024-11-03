@@ -1,77 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <style>
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        font-family: Arial, sans-serif;
-      }
-      form {
-        text-align: center;
-      }
-      label {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div>
-      <h1>Image Analysis</h1>
-      <form id="uploadForm" enctype="multipart/form-data" method="POST" action="/analyze-image">
-        <label for="imageFile">Choose an image:</label>
-        <input
-          type="file"
-          id="imageFile"
-          name="imageFile"
-          accept="image/*"
-          required
-        />
-        <button type="submit">Analyze Image</button>
-      </form>
-    </div>
-  </body>
-</html>
-
-  <script>
-    async function submitImage() {
-      const fileInput = document.getElementById("imageFile");
-      const formData = new FormData();
-      formData.append("imageFile", fileInput.files[0]);
-
-      try {
-        const response = await fetch("/analyze-image", {
-          method: "POST",
-          body: formData,
-        });
-
-        console.log("Raw Response:", response); // Log the raw response
-
-        const result = await response.json();
-
-        if (response.ok) {
-          const detectedItems = result.detectedItems;
-
-          // Display the list of detected items
-          document.getElementById("result").innerHTML =
-            "<h2>Detected Objects:</h2><ul>" +
-            detectedItems.map((item) => `<li>${item}</li>`).join("") +
-            "</ul>";
-        } else {
-          document.getElementById(
-            "result"
-          ).innerHTML = `<p>Error: ${result.error}</p>`;
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: #e0e0e0;
         }
-      } catch (error) {
-        console.error("Error:", error);
-        document.getElementById(
-          "result"
-        ).innerHTML = `<p>An error occurred while processing the image.</p>`;
-      }
-    }
-  </script>
+        header {
+            background-color: #012169;
+            color: white;
+            display: flex;
+            align-items: center;
+            height: 80px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: fixed;
+            top: 10px;
+            width: calc(100% - 40px);
+            max-width: 1990px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            margin: 0 auto;
+        }
+        .logo {
+            position: absolute;
+            left: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .app-name {
+            font-size: 24px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 120px;
+            width: 100%;
+        }
+        .upload-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid black;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 3;
+            position: relative;
+        }
+        h1 {
+            margin: 0 0 20px;
+            text-align: center;
+            color: #012169;
+        }
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+            width: 100%; /* Full width */
+        }
+        .file-input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex; /* Align button and file input horizontally */
+            align-items: center;
+            justify-content: center; /* Center the buttons */
+            width: 100%;
+        }
+        .custom-file-button {
+            background-color: #012169; /* Blue color */
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 15px; /* Padding for the button */
+            cursor: pointer;
+            height: 45px; /* Set height for the button */
+            margin-left: 10px; /* Space between label and button */
+        }
+        .file-name {
+            margin-top: 10px; /* Space between button and file name */
+            font-size: 16px; /* Smaller font size for file name */
+            color: #555; /* Lighter color for the file name text */
+        }
+        .upload-button {
+            background-color: #012169; /* Blue color */
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 10px 15px; /* Padding for the button */
+            cursor: pointer;
+            height: 45px; /* Set height for the button */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        input[type="file"] {
+            display: none; /* Hide the file input */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Logo goes here</div>
+        <div class="app-name">SnapSuggest</div>
+        <div></div>
+    </header>
+
+    <div class="main-content">
+        <h1>Image Analysis</h1>
+
+        <div class="upload-container">
+            <form id="uploadForm" enctype="multipart/form-data" method="POST" action="/analyze-image">
+                <div class="file-input-container">
+                    <label for="imageFile">Choose an image:</label>
+                    <div class="button-container">
+                        <button type="button" class="custom-file-button" onclick="document.getElementById('imageFile').click();">Start Snapping</button>
+                    </div>
+                    <span class="file-name" id="fileName">No file chosen</span>
+                    <input type="file" id="imageFile" name="imageFile" accept="image/*" required onchange="updateFileName()" />
+                </div>
+                <button type="submit" class="upload-button">Start Uploading</button>
+            </form>
+        </div>
+    </div>
+    <div id="result"></div>
+    
+    <script>
+        function updateFileName() {
+            const fileInput = document.getElementById("imageFile");
+            const fileNameDisplay = document.getElementById("fileName");
+            fileNameDisplay.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file chosen';
+        }
+
+        async function submitImage() {
+            const fileInput = document.getElementById("imageFile");
+            const formData = new FormData();
+            formData.append("imageFile", fileInput.files[0]);
+
+            try {
+                const response = await fetch("/analyze-image", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                console.log("Raw Response:", response);
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    const detectedItems = result.detectedItems;
+
+                    document.getElementById("result").innerHTML =
+                        "<h2>Detected Objects:</h2><ul>" +
+                        detectedItems.map((item) => `<li>${item}</li>`).join("") +
+                        "</ul>";
+                } else {
+                    document.getElementById("result").innerHTML = `<p>Error: ${result.error}</p>`;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("result").innerHTML = `<p>An error occurred while processing the image.</p>`;
+            }
+        }
+    </script>
+</body>
 </html>
