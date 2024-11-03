@@ -20,7 +20,11 @@ APIs: Clarifai
 
 # 🖼️ Screenshots
 
-Include some images or screenshots of the app in action. These visuals make it easier for others to quickly grasp your project.
+![upload your image](<Screenshot 2024-11-03 at 10.58.56 AM.png>)
+Upload your image.
+
+![Result](<Screenshot 2024-11-03 at 10.57.52 AM.png>)
+Find the best product to complement your space on lowes.com
 
 # 🚧 Challenges We Ran Into
 
