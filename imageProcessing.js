@@ -24,7 +24,7 @@ function checkForReccomendations(array) {
     }
   }
 
-  if (
+  else if (
     array.some((item) => item.includes("bedroom")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -45,7 +45,7 @@ function checkForReccomendations(array) {
     }
   }
 
-  if (
+  else if (
     array.some((item) => item.includes("kitchen")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -66,7 +66,7 @@ function checkForReccomendations(array) {
     }
   }
 
-  if (
+  else if (
     array.some((item) => item.includes("house")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -87,7 +87,7 @@ function checkForReccomendations(array) {
     }
   }
 
-  if (
+  else if (
     array.some((item) => item.includes("bathroom")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -108,7 +108,7 @@ function checkForReccomendations(array) {
     }
   }
 
-  if (
+  else if (
     array.some((item) => item.includes("outdoor")) &&
     array.some((item) => item.includes("pool"))
   ) {
@@ -117,7 +117,7 @@ function checkForReccomendations(array) {
     }
   }
 
-  if (
+  else if (
     array.some((item) => item.includes("property")) &&
     array.some((item) => item.includes("yard"))
   ) {
@@ -151,9 +151,7 @@ function checkForReccomendations(array) {
     if (!array.some((item) => item.includes("rocking chair"))) {
       reccomendations.push("pergola");
     }
-    if (!array.some((item) => item.includes("plants"))) {
-      reccomendations.push("plants");
-    }
+    
     if (!array.some((item) => item.includes("grill"))) {
       reccomendations.push("grill");
     }
