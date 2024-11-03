@@ -2,12 +2,22 @@ const express = require("express");
 const path = require("path");
 const Clarifai = require("clarifai");
 const imageProcessing = require("./imageProcessing");
-const { apiKey } = require("./config");
+const { apiKey, secret } = require("./config");
 const multer = require("multer");
 const fs = require("fs");
+const { searchLowesForProducts } = require("./searchForLowes");
+const session = require("express-session");
 
 const app = express();
 const upload = multer({ dest: "uploads/" });
+
+app.use(
+  session({
+    secret: secret, // Change this to a secure key in production
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Set the views directory
 app.set("views", path.join(__dirname, "views"));
@@ -25,8 +35,11 @@ app.listen(PORT, () => {
 });
 
 // Route to render the index.ejs file
-app.get("/imgIn", (req, res) => {
+app.get("/", (req, res) => {
   res.render("imgIn/index");
+});
+app.get("/result", (req, res) => {
+  res.render("result");
 });
 
 app.get("/test-clarifai", async (req, res) => {
@@ -74,11 +87,17 @@ app.post("/analyze-image", upload.single("imageFile"), async (req, res) => {
     const reccomendation =
       imageProcessing.checkForReccomendations(detectedItems);
 
+    const searchResults = await searchLowesForProducts(reccomendation);
+
     console.log("Detected items:", detectedItems);
     console.log("Reccomendation:", reccomendation);
 
-    // Send back the array of detected item names
-    res.json({ detectedItems });
+    res.render("result", {
+      userImage: base64Image,
+      detectedItems,
+      reccomendation,
+      searchResults,
+    });
   } catch (error) {
     console.error("Error analyzing image:", error);
     res.status(500).json({ error: "Failed to analyze image" });
