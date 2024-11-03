@@ -64,6 +64,27 @@ app.get("/test-clarifai", async (req, res) => {
   }
 });
 
+async function getColorPalette(base64Image) {
+  try {
+    const response = await clarifaiApp.models.predict(Clarifai.COLOR_MODEL, {
+      base64: base64Image,
+    });
+    const colors = response.outputs[0].data.colors;
+
+    // Extract and format the colors
+    const colorPalette = colors.map((color) => ({
+      hex: color.raw_hex, // Hex color code
+      name: color.w3c.name, // Color name (e.g., "Light Pink")
+      value: color.value, // Confidence score (0 to 1)
+    }));
+
+    console.log("Extracted Color Palette:", colorPalette);
+    return colorPalette;
+  } catch (error) {
+    console.error("Error extracting color palette:", error);
+  }
+}
+
 app.post("/analyze-image", upload.single("imageFile"), async (req, res) => {
   try {
     console.log("File received:", req.file);
@@ -92,12 +113,15 @@ app.post("/analyze-image", upload.single("imageFile"), async (req, res) => {
     // Remove the uploaded file after processing
     fs.unlinkSync(imageFilePath);
 
+    const colorPalette = await getColorPalette(imageBytes);
+
     const recommendation =
       imageProcessing.checkForReccomendations(detectedItems);
     const searchResults = await searchLowesForProducts(recommendation);
 
     console.log("Recommendation:", recommendation);
     console.log("Search results:", JSON.stringify(searchResults, null, 2));
+    console.log("Color palette:", colorPalette);
 
     // Render the results page with all data
     res.render("result", {
@@ -105,6 +129,7 @@ app.post("/analyze-image", upload.single("imageFile"), async (req, res) => {
       detectedItems,
       recommendation,
       searchResults,
+      colorPalette,
     });
   } catch (error) {
     console.error("Error analyzing image:", error);

@@ -1,4 +1,6 @@
 // imageProcessing.js
+const Clarifai = require("clarifai");
+
 function checkForReccomendations(array) {
   let reccomendations = [];
 
@@ -11,7 +13,7 @@ function checkForReccomendations(array) {
       reccomendations.push("lamp");
     }
     if (!array.some((item) => item.includes("chair"))) {
-      reccomendations.push("chair");
+      reccomendations.push("office chair");
     }
     if (!array.some((item) => item.includes("computer"))) {
       reccomendations.push("computer");
@@ -22,9 +24,7 @@ function checkForReccomendations(array) {
     if (!array.some((item) => item.includes("organizer"))) {
       reccomendations.push("organizer");
     }
-  }
-
-  else if (
+  } else if (
     array.some((item) => item.includes("bedroom")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -43,9 +43,7 @@ function checkForReccomendations(array) {
     if (!array.some((item) => item.includes("mirror"))) {
       reccomendations.push("mirror");
     }
-  }
-
-  else if (
+  } else if (
     array.some((item) => item.includes("kitchen")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -64,9 +62,7 @@ function checkForReccomendations(array) {
     if (!array.some((item) => item.includes("microwave"))) {
       reccomendations.push("microwave");
     }
-  }
-
-  else if (
+  } else if (
     array.some((item) => item.includes("house")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -85,9 +81,7 @@ function checkForReccomendations(array) {
     if (!array.some((item) => item.includes("coffee table"))) {
       reccomendations.push("coffee table");
     }
-  }
-
-  else if (
+  } else if (
     array.some((item) => item.includes("bathroom")) &&
     array.some((item) => item.includes("indoor"))
   ) {
@@ -106,18 +100,17 @@ function checkForReccomendations(array) {
     if (!array.some((item) => item.includes("towel rack"))) {
       reccomendations.push("towel rack");
     }
-  }
-
-  else if (
+  } else if (
     array.some((item) => item.includes("outdoor")) &&
     array.some((item) => item.includes("pool"))
   ) {
     if (!array.some((item) => item.includes("pool chemical dispenser"))) {
       reccomendations.push("pool chemical dispenser");
     }
-  }
-
-  else if (
+    if (!array.some((item) => item.includes("pool vacuum hose"))) {
+      reccomendations.push("pool vacuum hose");
+    }
+  } else if (
     array.some((item) => item.includes("property")) &&
     array.some((item) => item.includes("yard"))
   ) {
@@ -151,7 +144,7 @@ function checkForReccomendations(array) {
     if (!array.some((item) => item.includes("rocking chair"))) {
       reccomendations.push("pergola");
     }
-    
+
     if (!array.some((item) => item.includes("grill"))) {
       reccomendations.push("grill");
     }
