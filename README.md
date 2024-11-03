@@ -20,7 +20,7 @@ APIs: Clarifai
 
 # 🖼️ Screenshots
 
-![upload your image](<Screenshot 2024-11-03 at 10.58.56 AM.png>)
+![Upload image](<Screenshot 2024-11-03 at 11.07.35 AM.png>)
 Upload your image.
 
 ![Result](<Screenshot 2024-11-03 at 10.57.52 AM.png>)
